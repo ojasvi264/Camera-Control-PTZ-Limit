@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 
 class ControlSystemController extends Controller
 {
-    public function index(){
-        return view('admin.control_system');
+    public function index(){x``
+        return view('admin.camera-control.index');
     }
 }
