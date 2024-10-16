@@ -10,8 +10,12 @@
             <label for="zoom-slider">Zoom:</label>
             <input type="range" id="zoom-slider" min="1" max="3" step="0.1" value="1">
         </div>
-        <div class="mirror-card">
+        <div class="mirror-card mb-2">
             <button id="mirror-btn" style="display: none">Mirror</button>
+        </div>
+        <div class="photo-card">
+            <button id="take-photo-btn" style="display: none">Take Photo</button>
+            <canvas id="canvas" style="display: none;"></canvas>
         </div>
 
         <div class="video-card">
