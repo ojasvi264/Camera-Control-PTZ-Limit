@@ -13,9 +13,27 @@
         <div class="mirror-card mb-2">
             <button id="mirror-btn" style="display: none">Mirror</button>
         </div>
-        <div class="photo-card">
+        <div class="photo-card mb-2">
             <button id="take-photo-btn" style="display: none">Take Photo</button>
             <canvas id="canvas" style="display: none;"></canvas>
+        </div>
+
+        <button id="toggleButton" style="display: none">Apply Filters</button>
+
+        <div class="apply-filter-slider" id="filterSliderContainer">
+            <label for="saturation">Saturation</label>
+            <input type="range" id="saturation" min="0" max="200" value="100"><br>
+
+            <label for="brightness">Brightness</label>
+            <input type="range" id="brightness" min="0" max="200" value="100"><br>
+
+            <label for="sharpness">Sharpness</label>
+            <input type="range" id="sharpness" min="0" max="200" value="100"><br>
+
+            <label for="noiseReduction">Noise Reduction</label>
+            <input type="range" id="noiseReduction" min="0" max="100" value="0"><br>
+
+            <button id="resetFilter">Reset Filters</button>
         </div>
 
         <div class="video-card">
