@@ -26,5 +26,12 @@
         .slider-container {
             margin: 20px 0;
         }
+
+        .apply-filter-slider {
+            display: none; /* Hide the slider container by default */
+            margin-bottom: 20px;
+            transition: all 0.3s ease-in-out;
+        }
+
     </style>
 @endsection
