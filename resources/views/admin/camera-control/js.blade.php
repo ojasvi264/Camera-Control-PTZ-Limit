@@ -114,7 +114,6 @@
             })
             .then(response => response.json())
             .then(data => {
-                console.log(data);
                 if(data.success){
                     alert(data.file);
                     alert("Photo Saved Successfully");
