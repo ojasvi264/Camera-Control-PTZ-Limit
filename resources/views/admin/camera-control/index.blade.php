@@ -11,14 +11,14 @@
             <input type="range" id="zoom-slider" min="1" max="3" step="0.1" value="1">
         </div>
         <div class="mirror-card mb-2">
-            <button id="mirror-btn" style="display: none">Mirror</button>
+            <button id="mirror-btn" class="btn btn-primary" style="display: none">Mirror</button>
         </div>
         <div class="photo-card mb-2">
-            <button id="take-photo-btn" style="display: none">Take Photo</button>
+            <button id="take-photo-btn" class="btn btn-success" style="display: none">Take Photo</button>
             <canvas id="canvas" style="display: none;"></canvas>
         </div>
 
-        <button id="toggleButton" style="display: none">Apply Filters</button>
+        <button id="toggleButton" class="btn btn-warning" style="display: none">Apply Filters</button>
 
         <div class="apply-filter-slider" id="filterSliderContainer">
             <label for="saturation">Saturation</label>
@@ -33,7 +33,7 @@
             <label for="noiseReduction">Noise Reduction</label>
             <input type="range" id="noiseReduction" min="0" max="100" value="0"><br>
 
-            <button id="resetFilter">Reset Filters</button>
+            <button id="resetFilter" class="btn btn-danger">Reset Filters</button>
         </div>
 
         <div class="video-card">
