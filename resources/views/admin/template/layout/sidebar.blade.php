@@ -51,6 +51,15 @@
                         </p>
                     </a>
                 </li>
+
+                <li class="nav-item menu-open">
+                    <a href="{{ route('admin.ptz_setting') }}" class="nav-link {{ \Illuminate\Support\Facades\Request::is('control-system') ? "active" : '' }}">
+                        <i class="nav-icon fas fa-cog"></i>
+                        <p>
+                            PTZ Setting
+                        </p>
+                    </a>
+                </li>
             </ul>
         </nav>
         <!-- /.sidebar-menu -->
