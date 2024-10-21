@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('camera_settings', function (Blueprint $table) {
-            $table->unsignedBigInteger('id');
+            $table->bigIncrements('id');
             $table->string('camera_id');
             $table->integer('zoom_level');
             $table->float('pan_limit_max');
