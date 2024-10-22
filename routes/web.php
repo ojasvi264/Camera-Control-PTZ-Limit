@@ -11,12 +11,15 @@ Route::get('/', function () {
 });
 
 Route::get('/', [DashboardController::class, 'index'])->name('admin.index');
-Route::get('/control-system', [ControlSystemController::class, 'index'])->name('admin.control_system');
+Route::get('control-system', [ControlSystemController::class, 'index'])->name('admin.control_system');
 
-Route::get('/camera-setting', [CameraSettingController::class, 'index'])->name('admin.ptz_setting');
-Route::get('/camera-setting/list', [CameraSettingController::class, 'list'])->name('admin.ptz_setting.list');
+Route::get('camera-setting', [CameraSettingController::class, 'index'])->name('admin.ptz_setting');
+Route::get('camera-setting/list', [CameraSettingController::class, 'list'])->name('admin.ptz_setting.list');
 Route::post('ptz/store', [CameraSettingController::class, 'store'])->name('admin.store_ptz');
-Route::get('camera/info', [CameraSettingController::class, 'getCameraInfo']);
 Route::post('ptz-control/update', [CameraSettingController::class, 'updatePTZInfo']);
+Route::get('camera/info', [CameraSettingController::class, 'cameraInfo']);
 
-Route::post('/save-photo', [PhotoController::class, 'store']);
+
+Route::get('api/camera/info', [CameraSettingController::class, 'getCameraInfo']);
+
+Route::post('save-photo', [PhotoController::class, 'store']);
