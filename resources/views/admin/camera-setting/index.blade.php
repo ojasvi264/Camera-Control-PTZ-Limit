@@ -10,22 +10,22 @@
 
             <div class="form-group">
                 <label for="min_pan_limit">Min Pan Limit (degrees)</label>
-                <input type="number" name="min_pan_limit" id="min_pan_limit" class="form-control" value="{{ old('min_pan_limit', $ptzSetting['pan_limit_min'] ?? '') }}" placeholder="Enter min pan limit">
+                <input type="number" name="min_pan_limit" id="min_pan_limit" class="form-control" value="{{ old('min_pan_limit', $ptzSetting['pan_limit_min'] ?? '') }}" placeholder="Enter min pan limit" step="0.01">
             </div>
 
             <div class="form-group">
                 <label for="max_pan_limit">Max Pan Limit (degrees)</label>
-                <input type="number" name="max_pan_limit" id="max_pan_limit" class="form-control" value="{{ old('max_pan_limit', $ptzSetting['pan_limit_max'] ?? '') }}" placeholder="Enter max pan limit">
+                <input type="number" name="max_pan_limit" id="max_pan_limit" class="form-control" value="{{ old('max_pan_limit', $ptzSetting['pan_limit_max'] ?? '') }}" placeholder="Enter max pan limit" step="0.01">
             </div>
 
             <div class="form-group">
                 <label for="min_tilt_limit">Min Tilt Limit (degrees)</label>
-                <input type="number" name="min_tilt_limit" id="min_tilt_limit" class="form-control" value="{{ old('min_tilt_limit', $ptzSetting['tilt_limit_min'] ?? '') }}" placeholder="Enter min tilt limit">
+                <input type="number" name="min_tilt_limit" id="min_tilt_limit" class="form-control" value="{{ old('min_tilt_limit', $ptzSetting['tilt_limit_min'] ?? '') }}" placeholder="Enter min tilt limit" step="0.01">
             </div>
 
             <div class="form-group">
                 <label for="max_tilt_limit">Max Tilt Limit (degrees)</label>
-                <input type="number" name="max_tilt_limit" id="max_tilt_limit" class="form-control" value="{{ old('max_tilt_limit', $ptzSetting['tilt_limit_max'] ?? '') }}" placeholder="Enter max tilt limit">
+                <input type="number" name="max_tilt_limit" id="max_tilt_limit" class="form-control" value="{{ old('max_tilt_limit', $ptzSetting['tilt_limit_max'] ?? '') }}" placeholder="Enter max tilt limit" step="0.01">
             </div>
 
             <button type="submit" class="btn btn-primary">Set Limitations</button>
