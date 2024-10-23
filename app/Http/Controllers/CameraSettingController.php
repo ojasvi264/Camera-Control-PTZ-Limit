@@ -46,29 +46,43 @@ class CameraSettingController extends Controller
         }
 
         // Store the settings for 1x zoom (initial setup)
-        CameraSetting::updateOrCreate(
-            [
-                'camera_id' => 1,
-                'zoom_level' => 1, // 1x zoom
-                'pan_limit_min' => $minPanLimit1x,
-                'pan_limit_max' => $maxPanLimit1x,
-                'tilt_limit_min' => $minTiltLimit1x,
-                'tilt_limit_max' => $maxTiltLimit1x
-            ]
-        );
+//        CameraSetting::updateOrCreate(
+//            [
+//                'camera_id' => 1,
+//                'zoom_level' => 1, // 1x zoom
+//                'pan_limit_min' => $minPanLimit1x,
+//                'pan_limit_max' => $maxPanLimit1x,
+//                'tilt_limit_min' => $minTiltLimit1x,
+//                'tilt_limit_max' => $maxTiltLimit1x
+//            ]
+//        );
 
-        // Loop to calculate and store limitations for zoom levels from 2x to 40x
-        for ($zoomValue = 2; $zoomValue <= 9999; $zoomValue++) {
-            // Calculate Zoom Level (X) using the formula
-            $zoomLevelX = 1 + (($zoomValue - 1) / (9999 - 1)) * 39;
 
-            // Adjust pan and tilt limits based on the zoom level (X)
-            $adjustedMinPanLimit = round($minPanLimit1x / $zoomLevelX, 2); // Limits decrease as zoom level increases
-            $adjustedMaxPanLimit = round($maxPanLimit1x / $zoomLevelX, 2);
-            $adjustedMinTiltLimit = round($minTiltLimit1x / $zoomLevelX, 2);
-            $adjustedMaxTiltLimit = round($maxTiltLimit1x / $zoomLevelX, 2);
+        // Fetch zoom steps from the API
+        $cameraIP = "192.168.128.153";
+        $username = "saver";
+        $password = "5aver5aver";
 
-            // Store the calculated limits for each zoom level (X)
+        $client = new Client();
+
+        // Make the request with Digest Authentication
+        $response = $client->request('GET', "http://$cameraIP/axis-cgi/com/ptz.cgi?query=attributes&format=json", [
+            'auth' => [$username, $password, 'digest'] // Use Digest Auth
+        ]);
+        $responseBody = (string) $response->getBody();
+        $zoomSteps = json_decode($responseBody)->{'Camera 1'}->zoomSteps;
+
+        foreach ($zoomSteps as $step) {
+            $zoomValue = $step->zoom;
+            $zoomLevelValue = $step->value;
+
+            // Adjust pan and tilt limits based on the zoom level
+            $adjustedMinPanLimit = round($minPanLimit1x * ($maxPanLimit1x / $zoomLevelValue), 2);
+            $adjustedMaxPanLimit = round($maxPanLimit1x * ($maxPanLimit1x / $zoomLevelValue), 2);
+            $adjustedMinTiltLimit = round($minTiltLimit1x * ($maxTiltLimit1x / $zoomLevelValue), 2);
+            $adjustedMaxTiltLimit = round($maxTiltLimit1x * ($maxTiltLimit1x / $zoomLevelValue), 2);
+
+            // Store the calculated limits for each zoom level
             CameraSetting::updateOrCreate(
                 [
                     'camera_id' => 1,
@@ -80,7 +94,6 @@ class CameraSettingController extends Controller
                 ]
             );
         }
-
         // Return success response
         return redirect()->route('admin.ptz_setting.list')->with('success', 'Camera settings saved successfully!');
     }
