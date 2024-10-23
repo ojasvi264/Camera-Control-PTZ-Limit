@@ -46,16 +46,16 @@ class CameraSettingController extends Controller
         }
 
         // Store the settings for 1x zoom (initial setup)
-//        CameraSetting::updateOrCreate(
-//            [
-//                'camera_id' => 1,
-//                'zoom_level' => 1, // 1x zoom
-//                'pan_limit_min' => $minPanLimit1x,
-//                'pan_limit_max' => $maxPanLimit1x,
-//                'tilt_limit_min' => $minTiltLimit1x,
-//                'tilt_limit_max' => $maxTiltLimit1x
-//            ]
-//        );
+        CameraSetting::updateOrCreate(
+            [
+                'camera_id' => 1,
+                'zoom_level' => 1, // 1x zoom
+                'pan_limit_min' => $minPanLimit1x,
+                'pan_limit_max' => $maxPanLimit1x,
+                'tilt_limit_min' => $minTiltLimit1x,
+                'tilt_limit_max' => $maxTiltLimit1x
+            ]
+        );
 
 
         // Fetch zoom steps from the API
@@ -109,12 +109,13 @@ class CameraSettingController extends Controller
         $response = $client->request('GET', "http://$cameraIP/axis-cgi/param.cgi?action=list", [
             'auth' => [$username, $password, 'digest'] // Use Digest Auth
         ]);
-// Get the response body as a string
+        // Get the response body as a string
         $responseBody = (string) $response->getBody();
 
         // Parse the response since it's not JSON but key-value pairs
         $cameraInfo = $this->parseKeyValueResponse($responseBody);
 
+//        dd($cameraInfo);
         // Check if the response is successful
         if ($response->getStatusCode() == 200) {
             // Return parsed response as JSON
