@@ -12,7 +12,7 @@
             </tr>
             @foreach($ptzSettings as $index => $ptzSetting)
                 <tr>
-                    <td>{{++$index}}</td>
+                    <td>{{ $ptzSettings->firstItem() + $index }}</td>
                     <td>{{$ptzSetting->zoom_level}}</td>
                     <td>{{$ptzSetting->pan_limit_min}}</td>
                     <td>{{$ptzSetting->pan_limit_max}}</td>
