@@ -15,6 +15,7 @@ return new class extends Migration
             $table->bigIncrements('id');
             $table->string('camera_id');
             $table->integer('zoom_level');
+            $table->integer('zoom_level_value');
             $table->float('pan_limit_max');
             $table->float('pan_limit_min');
             $table->float('tilt_limit_min');
