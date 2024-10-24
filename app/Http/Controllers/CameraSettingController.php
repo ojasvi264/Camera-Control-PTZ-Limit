@@ -50,6 +50,7 @@ class CameraSettingController extends Controller
             [
                 'camera_id' => 1,
                 'zoom_level' => 1, // 1x zoom
+                'zoom_level_value' => 1, // 1x zoom
                 'pan_limit_min' => $minPanLimit1x,
                 'pan_limit_max' => $maxPanLimit1x,
                 'tilt_limit_min' => $minTiltLimit1x,
@@ -87,6 +88,7 @@ class CameraSettingController extends Controller
                 [
                     'camera_id' => 1,
                     'zoom_level' => $zoomValue, // Save the zoom value for each level
+                    'zoom_level_value' => $zoomLevelValue,
                     'pan_limit_min' => $adjustedMinPanLimit,
                     'pan_limit_max' => $adjustedMaxPanLimit,
                     'tilt_limit_min' => $adjustedMinTiltLimit,
