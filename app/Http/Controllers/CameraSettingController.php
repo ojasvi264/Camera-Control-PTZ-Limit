@@ -26,6 +26,7 @@ class CameraSettingController extends Controller
 
     public function store(Request $request)
     {
+        dd("Under Maintenance");
         // Validate input data
         $request->validate([
             'min_pan_limit' => 'required|numeric',
