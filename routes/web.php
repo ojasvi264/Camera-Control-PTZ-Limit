@@ -20,6 +20,10 @@ Route::post('ptz-control/update', [CameraSettingController::class, 'updatePTZInf
 Route::get('camera/info', [CameraSettingController::class, 'cameraInfo']);
 
 
+
+Route::get('limit/PTZ', [\App\Http\Controllers\PtzLimitController::class, 'limitPTZ']);
+
+
 Route::get('api/camera/info', [CameraSettingController::class, 'getCameraInfo']);
 
 Route::post('save-photo', [PhotoController::class, 'store']);
