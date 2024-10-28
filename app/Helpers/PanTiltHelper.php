@@ -42,8 +42,8 @@ function getPanTiltLimits(): array
         'x7' => [
             'panMin' => -26.5,
             'panMax' => 26.5,
-            'tiltMin' => -15.59,
-            'tiltMax' => 15.59,
+            'tiltMin' => -16,
+            'tiltMax' => 16,
         ],
         'x8' => [
             'panMin' => -27.01,
