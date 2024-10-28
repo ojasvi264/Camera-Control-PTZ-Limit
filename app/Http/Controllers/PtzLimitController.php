@@ -21,30 +21,34 @@ class PtzLimitController extends Controller
         $client = new Client();
 
         // Make the request with Digest Authentication
-        $response = $client->request('GET', "http://$cameraIP/axis-cgi/com/ptz.cgi?query=position", [
-            'auth' => [$username, $password, 'digest'] // Use Digest Auth
-        ]);
-        $responseBody = (string) $response->getBody();
-        $ptzInfo = $this->parseResponseToJson($responseBody);
+//        $response = $client->request('GET', "http://$cameraIP/axis-cgi/com/ptz.cgi?query=position", [
+//            'auth' => [$username, $password, 'digest'] // Use Digest Auth
+//        ]);
+//        $responseBody = (string) $response->getBody();
+//        $ptzInfo = $this->parseResponseToJson($responseBody);
 
+        $ptzInfo = [
+                'zoom' => 257,
+        ];
 
+        $zoomLevel = ZoomValue::getZoomLevelFromValue($ptzInfo['zoom'])->name;
         $limits = getPanTiltLimits();
-        $matchingLimit = null;
+//        $matchingLimit = null;
 
-        foreach (ZoomValue::cases() as $limit) {
-            if ($ptzInfo['zoom'] == $limit->value) {
-                $matchingLimit = $limit;
-                break;
-            }
-        }
+//        foreach (ZoomValue::cases() as $limit) {
+//            if ($ptzInfo['zoom'] == $limit->value) {
+//                $matchingLimit = $limit;
+//                break;
+//            }
+//        }
 //        dd($matchingLimit);
 
-        if ($matchingLimit){
-            $minPanLimit = $minPan1x + ($limits[$matchingLimit->name]['panMin']);
-            $maxPanLimit = $maxPan1x + ($limits[$matchingLimit->name]['panMax']);
+        if ($zoomLevel){
+            $minPanLimit = $minPan1x + ($limits[$zoomLevel]['panMin']);
+            $maxPanLimit = $maxPan1x + ($limits[$zoomLevel]['panMax']);
 
-            $minTiltLimit = $minTilt1x + ($limits[$matchingLimit->name]['tiltMin']);
-            $maxTiltLimit = $maxTilt1x + ($limits[$matchingLimit->name]['tiltMax']);
+            $minTiltLimit = $minTilt1x + ($limits[$zoomLevel]['tiltMin']);
+            $maxTiltLimit = $maxTilt1x + ($limits[$zoomLevel]['tiltMax']);
 
 
             // Adjust the pan limits to stay within -180 to 180
@@ -70,8 +74,6 @@ class PtzLimitController extends Controller
         } else{
             dd("Zoom Level not Matched. Please check again.");
         }
-
-
     }
 
     private function parseResponseToJson($responseBody)
