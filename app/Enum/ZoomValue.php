@@ -16,4 +16,14 @@ enum ZoomValue: int
     case x10 = 2308;
     case x11 = 2564;
     case x12 = 2820;
+
+    public static function getZoomLevelFromValue(int $value): ?self
+    {
+        foreach (self::cases() as $case) {
+            if ($case->value === $value) {
+                return $case;
+            }
+        }
+        return null;
+    }
 }
