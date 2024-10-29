@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Enum\ZoomValue;
 use App\Models\CameraSetting;
 use GuzzleHttp\Exception\RequestException;
 use Illuminate\Http\Request;
@@ -26,7 +27,6 @@ class CameraSettingController extends Controller
 
     public function store(Request $request)
     {
-        dd("Under Maintenance");
         // Validate input data
         $request->validate([
             'min_pan_limit' => 'required|numeric',
@@ -35,11 +35,17 @@ class CameraSettingController extends Controller
             'max_tilt_limit' => 'required|numeric',
         ]);
 
+        $sensorWidth = 5.4;
+        $sensorHeight = 3;
+        $initialFocalLength = 4.25;
+        $hfovat1x = 65.1;
+        $vfovat1x = 39.1;
+
         // Get user input for 1x zoom limits
-        $minPanLimit1x = $request->input('min_pan_limit'); // e.g., -180
+        $minPanLimit1x = $request->input('min_pan_limit'); // e.g., -90
         $maxPanLimit1x = $request->input('max_pan_limit'); // e.g., 180
-        $minTiltLimit1x = $request->input('min_tilt_limit'); // e.g., -180
-        $maxTiltLimit1x = $request->input('max_tilt_limit'); // e.g., -50
+        $minTiltLimit1x = $request->input('min_tilt_limit'); // e.g., -90
+        $maxTiltLimit1x = $request->input('max_tilt_limit'); // e.g., 20
 
         // Truncate old settings if any exist
         if (CameraSetting::exists()) {
@@ -51,7 +57,8 @@ class CameraSettingController extends Controller
             [
                 'camera_id' => 1,
                 'zoom_level' => 1, // 1x zoom
-                'zoom_level_value' => 1, // 1x zoom
+                'hfov_left_right' => 0,
+                'vfov_up_down' => 0,
                 'pan_limit_min' => $minPanLimit1x,
                 'pan_limit_max' => $maxPanLimit1x,
                 'tilt_limit_min' => $minTiltLimit1x,
@@ -59,44 +66,56 @@ class CameraSettingController extends Controller
             ]
         );
 
-
         // Fetch zoom steps from the API
-        $cameraIP = "192.168.128.153";
-        $username = "saver";
-        $password = "5aver5aver";
+//        $cameraIP = "192.168.128.153";
+//        $username = "saver";
+//        $password = "5aver5aver";
+//
+//        $client = new Client();
+//
+//        // Make the request with Digest Authentication
+//        $response = $client->request('GET', "http://$cameraIP/axis-cgi/com/ptz.cgi?query=attributes&format=json", [
+//            'auth' => [$username, $password, 'digest'] // Use Digest Auth
+//        ]);
+//        $responseBody = (string) $response->getBody();
+//        $zoomSteps = json_decode($responseBody)->{'Camera 1'}->zoomSteps;
 
-        $client = new Client();
+        for($i = 2; $i <= 40; $i++) {
+            $focalLength = $i * $initialFocalLength;
 
-        // Make the request with Digest Authentication
-        $response = $client->request('GET', "http://$cameraIP/axis-cgi/com/ptz.cgi?query=attributes&format=json", [
-            'auth' => [$username, $password, 'digest'] // Use Digest Auth
-        ]);
-        $responseBody = (string) $response->getBody();
-        $zoomSteps = json_decode($responseBody)->{'Camera 1'}->zoomSteps;
+            //Calculating the horizontal and vertical field of view at each zoom level from 1 to 40.
+            $hfov = round(2 * rad2deg(atan($sensorWidth / (2 * $focalLength))), 2);
+            $vfov = round(2 * rad2deg(atan($sensorHeight / (2 * $focalLength))), 2);
 
-        foreach ($zoomSteps as $step) {
-            $zoomValue = $step->zoom;
-            $zoomLevelValue = $step->value;
+            $hfovDifferenceLeftRight = ($hfovat1x - $hfov)/2;
+            $vfovDifferenceUpDown = ($vfovat1x - $vfov)/2;
 
-            // Adjust pan and tilt limits based on the zoom level
-            $adjustedMinPanLimit = round($minPanLimit1x * ($maxPanLimit1x / $zoomLevelValue), 2);
-            $adjustedMaxPanLimit = round($maxPanLimit1x * ($maxPanLimit1x / $zoomLevelValue), 2);
-            $adjustedMinTiltLimit = round($minTiltLimit1x * ($maxTiltLimit1x / $zoomLevelValue), 2);
-            $adjustedMaxTiltLimit = round($maxTiltLimit1x * ($maxTiltLimit1x / $zoomLevelValue), 2);
+            $minPanLimit = $minPanLimit1x - $hfovDifferenceLeftRight;
+            $maxPanLimit = $maxPanLimit1x + $hfovDifferenceLeftRight;
 
-            // Store the calculated limits for each zoom level
+            $minTiltLimit = $minTiltLimit1x - $vfovDifferenceUpDown;
+            $maxTiltLimit = $maxTiltLimit1x + $vfovDifferenceUpDown;
+
+            // Adjust the pan limits to stay within -180 to 180
+            $adjustedMinPanLimit = round(getAdjustedPanLimit($minPanLimit), 2);
+            $adjustedMaxPanLimit = round(getAdjustedPanLimit($maxPanLimit), 2);
+
+            $adjustedMinTiltLimit = round(getAdjustedTiltLimit($minTiltLimit),2);
+            $adjustedMaxTiltLimit = round(getAdjustedTiltLimit($maxTiltLimit), 2);
+
             CameraSetting::updateOrCreate(
                 [
                     'camera_id' => 1,
-                    'zoom_level' => $zoomValue, // Save the zoom value for each level
-                    'zoom_level_value' => $zoomLevelValue,
+                    'zoom_level' => $i, // Save the zoom value for each level
+                    'hfov_left_right' => $hfovDifferenceLeftRight,
+                    'vfov_up_down' => $vfovDifferenceUpDown,
                     'pan_limit_min' => $adjustedMinPanLimit,
                     'pan_limit_max' => $adjustedMaxPanLimit,
                     'tilt_limit_min' => $adjustedMinTiltLimit,
                     'tilt_limit_max' => $adjustedMaxTiltLimit
                 ]
             );
-        }
+            }
         // Return success response
         return redirect()->route('admin.ptz_setting.list')->with('success', 'Camera settings saved successfully!');
     }
