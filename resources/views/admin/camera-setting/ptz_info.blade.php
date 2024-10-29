@@ -6,7 +6,7 @@
                 <th>S.N</th>
                 <th>Zoom Level</th>
                 <th>Horizontal Pan Distance</th>
-                <th>Vertical Pan Distance</th>
+                <th>Vertical Tilt Distance</th>
                 <th>Min PAN</th>
                 <th>Max PAN</th>
                 <th>Min Tilt</th>
