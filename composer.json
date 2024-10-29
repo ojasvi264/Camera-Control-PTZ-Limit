@@ -23,7 +23,8 @@
         "files": [
             "app/Helpers/PanTiltHelper.php",
             "app/Helpers/AdjustPanLimit.php",
-            "app/Helpers/AdjustTiltLimit.php"
+            "app/Helpers/AdjustTiltLimit.php",
+            "app/Helpers/ZoomValueHelper.php"
         ],
         "psr-4": {
             "App\\": "app/",
