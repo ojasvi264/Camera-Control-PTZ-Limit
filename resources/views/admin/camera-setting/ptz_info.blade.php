@@ -5,7 +5,8 @@
             <tr>
                 <th>S.N</th>
                 <th>Zoom Level</th>
-                <th>Zoom Value</th>
+                <th>Horizontal Pan Distance</th>
+                <th>Vertical Pan Distance</th>
                 <th>Min PAN</th>
                 <th>Max PAN</th>
                 <th>Min Tilt</th>
@@ -15,7 +16,8 @@
                 <tr>
                     <td>{{ $ptzSettings->firstItem() + $index }}</td>
                     <td>{{$ptzSetting->zoom_level}}</td>
-                    <td>{{$ptzSetting->zoom_level_value}}</td>
+                    <td>{{$ptzSetting->hfov_left_right}}</td>
+                    <td>{{$ptzSetting->vfov_up_down}}</td>
                     <td>{{$ptzSetting->pan_limit_min}}</td>
                     <td>{{$ptzSetting->pan_limit_max}}</td>
                     <td>{{$ptzSetting->tilt_limit_min}}</td>
