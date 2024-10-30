@@ -29,17 +29,17 @@ class CameraSettingController extends Controller
     {
         // Validate input data
         $request->validate([
-            'min_pan_limit' => 'required|numeric',
-            'max_pan_limit' => 'required|numeric',
-            'min_tilt_limit' => 'required|numeric',
-            'max_tilt_limit' => 'required|numeric',
+            'min_pan_limit' => 'required|numeric|min:-180',
+            'max_pan_limit' => 'required|numeric|max:180',
+            'min_tilt_limit' => 'required|numeric|min:-90',
+            'max_tilt_limit' => 'required|numeric|max:20',
         ]);
 
-        $sensorWidth = 5.4;
-        $sensorHeight = 3;
-        $initialFocalLength = 4.25;
-        $hfovat1x = 65.1;
-        $vfovat1x = 39.1;
+        $sensorWidth = 6.3;
+        $sensorHeight = 4.7;
+        $initialFocalLength = 3.9;
+        $hfovat1x = 70.7;
+        $vfovat1x = 43.5;
 
         // Get user input for 1x zoom limits
         $minPanLimit1x = $request->input('min_pan_limit'); // e.g., -90
@@ -80,10 +80,10 @@ class CameraSettingController extends Controller
 //        $responseBody = (string) $response->getBody();
 //        $zoomSteps = json_decode($responseBody)->{'Camera 1'}->zoomSteps;
 
-        for($i = 2; $i <= 40; $i++) {
+        for($i = 2; $i <= 12; $i++) {
             $focalLength = $i * $initialFocalLength;
 
-            //Calculating the horizontal and vertical field of view at each zoom level from 1 to 40.
+            //Calculating the horizontal and vertical field of view at each zoom level from 1 to 12.
             $hfov = round(2 * rad2deg(atan($sensorWidth / (2 * $focalLength))), 2);
             $vfov = round(2 * rad2deg(atan($sensorHeight / (2 * $focalLength))), 2);
 
@@ -100,6 +100,7 @@ class CameraSettingController extends Controller
             $adjustedMinPanLimit = round(getAdjustedPanLimit($minPanLimit), 2);
             $adjustedMaxPanLimit = round(getAdjustedPanLimit($maxPanLimit), 2);
 
+            // Adjust the tilt limits to stay within -90 to 20
             $adjustedMinTiltLimit = round(getAdjustedTiltLimit($minTiltLimit),2);
             $adjustedMaxTiltLimit = round(getAdjustedTiltLimit($maxTiltLimit), 2);
 
