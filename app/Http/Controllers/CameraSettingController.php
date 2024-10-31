@@ -35,11 +35,11 @@ class CameraSettingController extends Controller
             'max_tilt_limit' => 'required|numeric|max:20',
         ]);
 
-        $sensorWidth = 6.3;
-        $sensorHeight = 4.7;
-        $initialFocalLength = 3.9;
-        $hfovat1x = 70.7;
-        $vfovat1x = 43.5;
+        $sensorWidth = 6.3; //sensor width of camera
+        $sensorHeight = 4.7;  //sensor height of camera
+        $initialFocalLength = 3.9; //focal length of camera
+        $hfovat1x = 70.7; //horizontal field of view at 1x.
+        $vfovat1x = 43.5; //vertical field of view at 1x.
 
         // Get user input for 1x zoom limits
         $minPanLimit1x = $request->input('min_pan_limit'); // e.g., -90
