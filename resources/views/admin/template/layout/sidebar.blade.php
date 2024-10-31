@@ -52,17 +52,83 @@
                     </a>
                 </li>
 
-                <li class="nav-item menu-open">
-                    <a href="{{ route('admin.ptz_setting') }}" class="nav-link {{ \Illuminate\Support\Facades\Request::is('camera-setting') ? "active" : '' }}">
+{{--                <li class="nav-item menu-open">--}}
+{{--                    <a href="{{ route('admin.ptz_setting') }}" class="nav-link {{ \Illuminate\Support\Facades\Request::is('camera-setting') ? "active" : '' }}">--}}
+{{--                        <i class="nav-icon fas fa-cog"></i>--}}
+{{--                        <p>--}}
+{{--                            PTZ Setting--}}
+{{--                        </p>--}}
+{{--                    </a>--}}
+{{--                </li>--}}
+
+                <li class="nav-item" id="ptz">
+                    <a href="#" class="nav-link {{ \Illuminate\Support\Facades\Request::is('camera-setting') ? "active" : '' }} {{ \Illuminate\Support\Facades\Request::is('camera-setting/*') ? "active" : '' }}" id="ptzSetting">
                         <i class="nav-icon fas fa-cog"></i>
                         <p>
                             PTZ Setting
+                            <i class="fas fa-angle-left right"></i>
                         </p>
                     </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="{{ route('admin.ptz_setting') }}" class="nav-link {{ \Illuminate\Support\Facades\Request::is('camera-setting') ? "active" : '' }}">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Set PTZ Limit</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('admin.ptz_setting.list') }}" class="nav-link {{ \Illuminate\Support\Facades\Request::is('camera-setting/list') ? "active" : '' }}">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>PTZ Limit List</p>
+                            </a>
+                        </li>
+                    </ul>
                 </li>
+
+
+{{--                <li class="nav-item">--}}
+{{--                    <a href="#" class="nav-link">--}}
+{{--                        <i class="nav-icon far fa-envelope"></i>--}}
+{{--                        <p>--}}
+{{--                            Mailbox--}}
+{{--                            <i class="fas fa-angle-left right"></i>--}}
+{{--                        </p>--}}
+{{--                    </a>--}}
+{{--                    <ul class="nav nav-treeview">--}}
+{{--                        <li class="nav-item">--}}
+{{--                            <a href="pages/mailbox/mailbox.html" class="nav-link">--}}
+{{--                                <i class="far fa-circle nav-icon"></i>--}}
+{{--                                <p>Inbox</p>--}}
+{{--                            </a>--}}
+{{--                        </li>--}}
+{{--                        <li class="nav-item">--}}
+{{--                            <a href="pages/mailbox/compose.html" class="nav-link">--}}
+{{--                                <i class="far fa-circle nav-icon"></i>--}}
+{{--                                <p>Compose</p>--}}
+{{--                            </a>--}}
+{{--                        </li>--}}
+{{--                        <li class="nav-item">--}}
+{{--                            <a href="pages/mailbox/read-mail.html" class="nav-link">--}}
+{{--                                <i class="far fa-circle nav-icon"></i>--}}
+{{--                                <p>Read</p>--}}
+{{--                            </a>--}}
+{{--                        </li>--}}
+{{--                    </ul>--}}
+{{--                </li>--}}
             </ul>
         </nav>
         <!-- /.sidebar-menu -->
     </div>
     <!-- /.sidebar -->
 </aside>
+<script>
+    let ptzSettingTabStatus = document.getElementById('ptzSetting');
+    let ptz = document.getElementById('ptz');
+
+    if (ptzSettingTabStatus.classList.contains('active')) {
+        ptz.classList.add('menu-open');
+    } else {
+        ptz.classList.remove('menu-open');
+    }
+</script>
+
