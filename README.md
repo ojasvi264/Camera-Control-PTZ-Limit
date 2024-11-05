@@ -14,5 +14,7 @@ and based on that limit, using camera features and values, the limit for rest of
 
 ### Requirements PTZ Limit System
 - PTZ Camera
+- PTZ Camera Documentation
 - PTZ Web Interface access
 - API Accessibility
+
