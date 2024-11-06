@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Enum\ZoomValue;
 use App\Models\CameraSetting;
 use GuzzleHttp\Exception\RequestException;
 use Illuminate\Http\Request;
@@ -138,7 +137,6 @@ class CameraSettingController extends Controller
         // Parse the response since it's not JSON but key-value pairs
         $cameraInfo = $this->parseKeyValueResponse($responseBody);
 
-//        dd($cameraInfo);
         // Check if the response is successful
         if ($response->getStatusCode() == 200) {
             // Return parsed response as JSON
