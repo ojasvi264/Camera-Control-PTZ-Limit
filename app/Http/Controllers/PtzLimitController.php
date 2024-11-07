@@ -50,6 +50,38 @@ class PtzLimitController extends Controller
         }
     }
 
+    public function getZoomValues()
+    {
+        $cameraIP = "192.168.128.153";
+        $username = "saver";
+        $password = "5aver5aver";
+        $minZoomLevel = 1;
+        $maxZoomLevel = 12;
+
+        $client = new Client();
+
+//         Make the request with Digest Authentication to get the current PTZ info.
+        $response = $client->request('GET', "http://$cameraIP/axis-cgi/com/ptz.cgi?query=position", [
+            'auth' => [$username, $password, 'digest'] // Use Digest Auth
+        ]);
+        $responseBody = (string) $response->getBody();
+        $ptzInfo = $this->parseResponseToJson($responseBody);
+
+        $currentZoomValue = $ptzInfo['zoom'];
+
+        $res = $client->request('GET', "http://$cameraIP/axis-cgi/com/ptz.cgi?query=limits", [
+            'auth' => [$username, $password, 'digest'] // Use Digest Auth
+        ]);
+        $resBody = (string) $res->getBody();
+        $ptzLimitInfo = $this->parseResponseToJson($resBody);
+
+        $minZoomValue = $ptzLimitInfo['MinZoom'];
+        $maxZoomValue = $ptzLimitInfo['MaxZoom'];
+
+        $zoomLevel = $minZoomLevel + ($currentZoomValue - $minZoomValue)/($maxZoomValue - $minZoomValue) * ($maxZoomLevel - $minZoomLevel);
+        dd($zoomLevel);
+    }
+
     private function parseResponseToJson($responseBody)
     {
         return array_reduce(
