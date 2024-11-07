@@ -78,7 +78,7 @@ class PtzLimitController extends Controller
         $minZoomValue = $ptzLimitInfo['MinZoom'];
         $maxZoomValue = $ptzLimitInfo['MaxZoom'];
 
-        $zoomLevel = $minZoomLevel + ($currentZoomValue - $minZoomValue)/($maxZoomValue - $minZoomValue) * ($maxZoomLevel - $minZoomLevel);
+        $zoomLevel = round($minZoomLevel + ($currentZoomValue - $minZoomValue)/($maxZoomValue - $minZoomValue) * ($maxZoomLevel - $minZoomLevel), 1);
         dd($zoomLevel);
     }
 
