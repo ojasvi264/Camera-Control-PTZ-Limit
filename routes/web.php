@@ -18,6 +18,7 @@ Route::get('camera-setting/list', [CameraSettingController::class, 'list'])->nam
 Route::post('ptz/store', [CameraSettingController::class, 'store'])->name('admin.store_ptz');
 Route::post('ptz-control/update', [CameraSettingController::class, 'updatePTZInfo']);
 Route::get('camera/info', [CameraSettingController::class, 'cameraInfo']);
+Route::get('zoom-value', [\App\Http\Controllers\PtzLimitController::class, 'getZoomValues']);
 
 
 
