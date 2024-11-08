@@ -2,6 +2,7 @@
 
 function getZoomValues(): array
 {
+    //These values are for AXIS Q6075-E PTZ Network Camera.
     return [
         [
             'zoom' => 2,

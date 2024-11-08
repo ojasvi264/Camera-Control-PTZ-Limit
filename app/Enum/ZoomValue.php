@@ -2,6 +2,7 @@
 
 namespace App\Enum;
 
+//These values are for AXIS Q6075-E PTZ Network Camera
 enum ZoomValue: int
 {
     case x1 = 1;
