@@ -60,25 +60,33 @@ class PtzLimitController extends Controller
 
         $client = new Client();
 
-//         Make the request with Digest Authentication to get the current PTZ info.
+        //Make the request with Digest Authentication to get the current PTZ info.
         $response = $client->request('GET', "http://$cameraIP/axis-cgi/com/ptz.cgi?query=position", [
             'auth' => [$username, $password, 'digest'] // Use Digest Auth
         ]);
         $responseBody = (string) $response->getBody();
+        //Parse the response to json format.
         $ptzInfo = $this->parseResponseToJson($responseBody);
 
+        //Get current zoom value.
         $currentZoomValue = $ptzInfo['zoom'];
 
+        //Request an API to get the min-max zoom values.
         $res = $client->request('GET', "http://$cameraIP/axis-cgi/com/ptz.cgi?query=limits", [
             'auth' => [$username, $password, 'digest'] // Use Digest Auth
         ]);
         $resBody = (string) $res->getBody();
+        //Parse the response to json format.
         $ptzLimitInfo = $this->parseResponseToJson($resBody);
 
+        //Get the minimum and maximum zoom values.
         $minZoomValue = $ptzLimitInfo['MinZoom'];
         $maxZoomValue = $ptzLimitInfo['MaxZoom'];
 
+        //Calculate the zoom level.
         $zoomLevel = round($minZoomLevel + ($currentZoomValue - $minZoomValue)/($maxZoomValue - $minZoomValue) * ($maxZoomLevel - $minZoomLevel), 1);
+
+        //Display the zoom level.
         dd($zoomLevel);
     }
 
