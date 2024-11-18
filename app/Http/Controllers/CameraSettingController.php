@@ -143,7 +143,6 @@ class CameraSettingController extends Controller
             return response()->json($cameraInfo);
         }
 
-
         // Log the response if it's not successful
         Log::info('Camera API Response', [
             'status' => $response->getStatusCode(),
