@@ -6,6 +6,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PhotoController;
 use App\Http\Controllers\CameraSettingController;
 use App\Http\Controllers\PtzLimitController;
+use App\Http\Controllers\CloneController;
 
 Route::get('/', function () {
     return view('admin.index');
@@ -23,7 +24,7 @@ Route::get('zoom-value', [PtzLimitController::class, 'getZoomValues']);
 
 Route::get('limit/PTZ', [PtzLimitController::class, 'limitPTZ']);
 
-Route::get('clone/create', [\App\Http\Controllers\CloneController::class, 'create']);
+Route::get('clone/create', [CloneController::class, 'create']);
 
 Route::get('api/camera/info', [CameraSettingController::class, 'getCameraInfo']);
 
