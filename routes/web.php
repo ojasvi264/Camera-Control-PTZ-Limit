@@ -23,6 +23,8 @@ Route::get('zoom-value', [PtzLimitController::class, 'getZoomValues']);
 
 Route::get('limit/PTZ', [PtzLimitController::class, 'limitPTZ']);
 
+Route::get('clone/create', [\App\Http\Controllers\CloneController::class, 'create']);
+
 Route::get('api/camera/info', [CameraSettingController::class, 'getCameraInfo']);
 
 Route::post('save-photo', [PhotoController::class, 'store']);
