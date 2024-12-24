@@ -86,9 +86,11 @@ class CameraSettingController extends Controller
             $hfov = round(2 * rad2deg(atan($sensorWidth / (2 * $focalLength))), 2);
             $vfov = round(2 * rad2deg(atan($sensorHeight / (2 * $focalLength))), 2);
 
+            //FOV for left right and up down.
             $hfovDifferenceLeftRight = ($hfovat1x - $hfov)/2;
             $vfovDifferenceUpDown = ($vfovat1x - $vfov)/2;
 
+            //FOV difference from 1x zoom.
             $minPanLimit = $minPanLimit1x - $hfovDifferenceLeftRight;
             $maxPanLimit = $maxPanLimit1x + $hfovDifferenceLeftRight;
 
