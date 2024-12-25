@@ -123,6 +123,7 @@ class CameraSettingController extends Controller
     }
 
     public function getCameraInfo(){
+        //Camera Credentials
         $cameraIP = "192.168.128.153";
         $username = "saver";
         $password = "5aver5aver";
@@ -160,6 +161,7 @@ class CameraSettingController extends Controller
     }
 
     public function updatePTZInfo(){
+        //Camera Credentials
         $cameraIP = "192.168.128.153";
         $username = "saver";
         $password = "5aver5aver";
