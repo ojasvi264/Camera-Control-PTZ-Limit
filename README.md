@@ -14,7 +14,7 @@ Since this system was developed for AXIS Q6128-E PTZ Network Camera(60Hz), So th
 
 ### Requirements Camera Control
 - WebCam
-- WebCam access
+- Camera access
 
 ### Requirements PTZ Limit System
 - PTZ Camera
